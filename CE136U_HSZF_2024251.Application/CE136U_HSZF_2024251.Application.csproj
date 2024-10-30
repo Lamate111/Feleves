@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CE136U_HSZF_2024251.Model\CE136U_HSZF_2024251.Model.csproj" />
+    <ProjectReference Include="..\CE136U_HSZF_2024251.Persistence.MsSql\CE136U_HSZF_2024251.Persistence.MsSql.csproj" />
+  </ItemGroup>
+
 </Project>

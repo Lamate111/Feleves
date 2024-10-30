@@ -1,0 +1,52 @@
+[
+    {
+        "Name": "Geralt",
+        "HealthStatus": "egészséges",
+        "Hunger": 0,
+        "Thirst": 0,
+        "Fatigue": 0,
+        "Skills": {
+            "harci_készség": 85,
+            "varázslás": 70,
+            "gyógyítás": 40,
+            "nyomkövetés": 60
+        }
+    },
+    {
+        "Name": "Yennefer",
+        "HealthStatus": "egészséges",
+        "Hunger": 0,
+        "Thirst": 0,
+        "Fatigue": 0,
+        "Skills": {
+            "varázslás": 95,
+            "gyógyítás": 60,
+            "harci_készség": 50
+        }
+    },
+    {
+        "Name": "Eskel",
+        "HealthStatus": "egészséges",
+        "Hunger": 0,
+        "Thirst": 0,
+        "Fatigue": 0,
+        "Skills": {
+            "harci_készség": 80,
+            "gyógyítás": 30,
+            "nyomkövetés": 70
+        }
+    },
+    {
+        "Name": "Ciri",
+        "HealthStatus": "egészséges",
+        "Hunger": 0,
+        "Thirst": 0,
+        "Fatigue": 0,
+        "Skills": {
+            "harci_készség": 90,
+            "varázslás": 50,
+            "gyógyítás": 40,
+            "nyomkövetés": 80
+        }
+    }
+]

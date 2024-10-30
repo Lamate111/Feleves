@@ -1,0 +1,43 @@
+[
+    {
+        "Name": "Szörnyvadászat",
+        "Duration": 3,
+        "Impact": "Fáradtság növelése",
+        "ResourceRequirements": {
+            "fegyver": 1,
+            "varázsital": 1
+        }
+    },
+    {
+        "Name": "Alkímiai főzet készítése",
+        "Duration": 2,
+        "Impact": "Egészség javítása",
+        "ResourceRequirements": {
+            "alkímiai alapanyag": 2
+        }
+    },
+    {
+        "Name": "Fegyver javítása",
+        "Duration": 1,
+        "Impact": "Fáradtság csökkentése",
+        "ResourceRequirements": {
+            "fegyver": 1,
+            "kovácseszköz": 1
+        }
+    },
+    {
+        "Name": "Erőforrás-gyűjtés",
+        "Duration": 2,
+        "Impact": "Éhség csökkentése",
+        "ResourceRequirements": {
+            "gyógynövény": 1,
+            "víz": 1
+        }
+    },
+    {
+        "Name": "Pihenés",
+        "Duration": 1,
+        "Impact": "Fáradtság csökkentése",
+        "ResourceRequirements": {}
+    }
+]
