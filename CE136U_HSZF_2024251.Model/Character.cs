@@ -1,22 +1,37 @@
 ﻿namespace CE136U_HSZF_2024251.Model
 {
 
-    public class Character
+    public class Rootobject
     {
-        public string Name { get; set; }
-        public string HealthStatus { get; set; }
-        public int Hunger { get; set; }
-        public int Thirst { get; set; }
-        public int Fatigue { get; set; }
-        public Skills Skills { get; set; }
+        public Class1[] Property1 { get; set; }
     }
 
-    public class Skills
+    public class Class1
     {
-        public int harci_készség { get; set; }
-        public int varázslás { get; set; }
-        public int gyógyítás { get; set; }
-        public int nyomkövetés { get; set; }
+        public int ID { get; set; }
+        public string name { get; set; }
+        public string health_status { get; set; }
+       
+
+        public string[] abilities { get; set; }
+        public Resources resources { get; set; }
+        public Attributes attributes { get; set; }
+    }
+
+    public class Attributes
+    {
+        public int health { get; set; }
+        public int hunger { get; set; }
+        public int thirst { get; set; }
+        public int fatigue { get; set; }
+    }
+
+    public class Resources
+    {
+        public int food { get; set; }
+        public int water { get; set; }
+        public int weapons { get; set; }
+        public int alchemy_ingredients { get; set; }
     }
 
 
