@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CE136U_HSZF_2024251.Model
+namespace CE136U_HSZF_2024251.Application
 {
-
-
-
-
+    internal class TaskService
+    {
+    }
 }

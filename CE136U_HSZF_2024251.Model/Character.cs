@@ -1,37 +1,36 @@
-﻿namespace CE136U_HSZF_2024251.Model
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CE136U_HSZF_2024251.Model
 {
 
-    public class Rootobject
+    public class Character
     {
-        public Class1[] Property1 { get; set; }
-    }
-
-    public class Class1
-    {
-        public int ID { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int id { get; set; }
+        [Required]
         public string name { get; set; }
+        [Required]
         public string health_status { get; set; }
-       
 
-        public string[] abilities { get; set; }
-        public Resources resources { get; set; }
-        public Attributes attributes { get; set; }
-    }
+ 
 
-    public class Attributes
-    {
-        public int health { get; set; }
-        public int hunger { get; set; }
-        public int thirst { get; set; }
-        public int fatigue { get; set; }
-    }
+        public Character()
+        {
+            resources = new HashSet<Resources>();
+            attributes = new HashSet<Attributes>();
+            abilities = new HashSet<Abilities>();
+            tasks = new HashSet<Tasks>();
+        }
+        public virtual ICollection<Resources> resources { get; set; }
 
-    public class Resources
-    {
-        public int food { get; set; }
-        public int water { get; set; }
-        public int weapons { get; set; }
-        public int alchemy_ingredients { get; set; }
+        [Required]
+        public virtual ICollection<Attributes> attributes { get; set; }
+        [Required]
+        public virtual ICollection<Abilities> abilities { get; set; }
+        public virtual ICollection<Tasks> tasks { get; set; }
+
     }
 
 

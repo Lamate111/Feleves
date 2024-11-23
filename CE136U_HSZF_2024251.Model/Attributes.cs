@@ -1,16 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CE136U_HSZF_2024251.Persistence.MsSql
+namespace CE136U_HSZF_2024251.Model
 {
     public class Attributes
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
         [Required]
-        public int Character_id { get; set; }
+        [ForeignKey(nameof(Character.id))]
+        public int char_id { get; set; }
         [Required]
         public int health { get; set; }
         [Required]
@@ -20,7 +20,6 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
         [Required]
         public int fatigue { get; set; }
     }
-
 
 
 }

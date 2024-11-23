@@ -157,10 +157,4 @@
 			}
 		}
 	],
-	"central_storage": {
-		"food": 20,
-		"water": 15,
-		"weapons": 5,
-		"alchemy_ingredients": 10
-	}
 }

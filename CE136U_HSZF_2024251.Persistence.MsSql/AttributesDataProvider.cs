@@ -1,0 +1,45 @@
+﻿using CE136U_HSZF_2024251.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CE136U_HSZF_2024251.Persistence.MsSql
+{
+    public class AttributesDataProvider : DataProvider<Attributes>
+    {
+        public AttributesDataProvider(TheWitchAppDataBaseContext context)
+        {
+            _context = context;
+        }
+
+        TheWitchAppDataBaseContext _context {  get; set; }
+
+        public void Create(Attributes entity)
+        {
+            _context.Attributes.Add(entity);
+            _context.SaveChanges();
+            
+        }
+
+        public void Delete(int id)
+        {
+            var ToBeDeleted = _context.Attributes.Find(id);
+            _context.Remove(ToBeDeleted);
+            _context.SaveChanges();
+            
+        }
+
+        public Attributes Read(int id)
+        {
+            return _context.Attributes.Find(id);
+        }
+
+        public void Update(Attributes entity)
+        {
+            _context.Update(entity);
+            _context.SaveChanges();
+        }
+    }
+}
