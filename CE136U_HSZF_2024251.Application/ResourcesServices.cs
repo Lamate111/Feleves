@@ -1,4 +1,5 @@
-﻿using CE136U_HSZF_2024251.Persistence.MsSql;
+﻿using CE136U_HSZF_2024251.Model;
+using CE136U_HSZF_2024251.Persistence.MsSql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,27 +8,42 @@ using System.Threading.Tasks;
 
 namespace CE136U_HSZF_2024251.Application
 {
-    public class ResourcesServices : DataProvider<ResourcesDataProvider>
+    public interface IResourcesService
     {
+        void Create(Resources entity);
+        void Delete(int id);
+        Resources Read(int id);
+        void Update(Resources entity);
 
-        public void Create(ResourcesDataProvider entity)
+    }
+    public class ResourcesServices : IResourcesService
+    {
+        readonly ResourcesDataProvider _context;
+
+        public ResourcesServices(ResourcesDataProvider context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public void Create(Resources entity)
+        {
+            _context.Create(entity);
+            
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _context.Delete(id);
         }
 
-        public ResourcesDataProvider Read(int id)
+        public Resources Read(int id)
         {
-            throw new NotImplementedException();
+            return _context.Read(id);
         }
 
-        public void Update(ResourcesDataProvider entity)
+        public void Update(Resources entity)
         {
-            throw new NotImplementedException();
+            _context.Update(entity);
         }
     }
 }

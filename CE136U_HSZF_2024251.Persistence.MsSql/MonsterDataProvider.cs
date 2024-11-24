@@ -7,7 +7,16 @@ using System.Threading.Tasks;
 
 namespace CE136U_HSZF_2024251.Persistence.MsSql
 {
-    public class MonsterDataProvider : DataProvider<Monsters>
+    public interface IMonsterDataProvider
+    {
+        void Create(Monsters entity);
+        void Delete(int id);
+        Monsters Read(int id);
+        void Update(Monsters entity);
+
+
+    }
+    public class MonsterDataProvider : IMonsterDataProvider
     {
         public MonsterDataProvider(TheWitchAppDataBaseContext context)
         {

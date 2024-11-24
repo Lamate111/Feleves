@@ -7,7 +7,15 @@ using System.Threading.Tasks;
 
 namespace CE136U_HSZF_2024251.Persistence.MsSql
 {
-    public class ResourcesDataProvider : DataProvider<Resources>
+    public interface IResourcesDataProvider
+    {
+        void Create(Resources entity);
+        void Delete(int id);
+        Resources Read (int id);
+        void Update(Resources entity);
+
+    }
+    public class ResourcesDataProvider : IResourcesDataProvider
     {
         public ResourcesDataProvider(TheWitchAppDataBaseContext context)
         {

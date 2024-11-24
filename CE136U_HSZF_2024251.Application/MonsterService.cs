@@ -8,9 +8,24 @@ using System.Threading.Tasks;
 
 namespace CE136U_HSZF_2024251.Application
 {
-    public class MonsterService : DataProvider<Monsters>
+    public interface IMonsterService
+    {
+        void Create(Monsters entity);
+        void Delete(int id);
+        Monsters Read(int id);
+        void Update(Monsters entity);
+
+
+    }
+    public class MonsterService : IMonsterService
     {
         readonly MonsterDataProvider provider;
+
+        public MonsterService(MonsterDataProvider provider)
+        {
+            this.provider = provider;
+        }
+
         public void Create(Monsters entity)
         {
             provider.Create(entity);

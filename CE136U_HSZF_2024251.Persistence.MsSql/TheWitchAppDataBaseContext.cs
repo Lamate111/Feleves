@@ -8,16 +8,6 @@ using System.Threading.Tasks;
 
 namespace CE136U_HSZF_2024251.Persistence.MsSql
 {
-    public interface DataProvider<T> 
-    {
-        void Create(T entity);
-        
-        T Read (int id);
-
-        void Update (T entity);
-        void Delete (int id);
-
-    }
     public class TheWitchAppDataBaseContext : DbContext
     {
         public DbSet<Character> Characters { get; set; }
@@ -34,11 +24,14 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
            Database.EnsureCreated();
         }
 
+        public TheWitchAppDataBaseContext(DbContextOptions<TheWitchAppDataBaseContext> options) : base(options) { }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=Witcher_team_db;Integrated Security=True;MultipleActiveResultSets=true";
             optionsBuilder.UseSqlServer(connStr);
+            optionsBuilder.UseLazyLoadingProxies();
             base.OnConfiguring(optionsBuilder);
             
         }

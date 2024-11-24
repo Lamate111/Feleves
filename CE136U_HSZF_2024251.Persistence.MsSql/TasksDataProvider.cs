@@ -7,7 +7,15 @@ using System.Threading.Tasks;
 
 namespace CE136U_HSZF_2024251.Persistence.MsSql
 {
-    public class TasksDataProvider : DataProvider<Tasks>
+    public interface ITasksProvider
+    {
+        void Create (Tasks task);
+        void Delete (int id);
+        Tasks Read (int id);
+        void Update (Tasks entity);
+
+    }
+    public class TasksDataProvider : ITasksProvider
     {
         public TasksDataProvider(TheWitchAppDataBaseContext context)
         {
@@ -18,11 +26,12 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
 
         
 
-        public void Create(Tasks entity)
+
+
+        public void Create(Tasks task)
         {
-            _context.Tasks.Add(entity);
+            _context.Tasks.Add(task);
             _context.SaveChanges();
-            
 
         }
 
@@ -34,16 +43,16 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
            
         }
 
-        public Tasks Read(int id)
-        {
-            return _context.Tasks.Find(id);
-        }
 
         public void Update(Tasks entity)
         {
             _context.Tasks.Update(entity);
             _context.SaveChanges();
-            
+        }
+
+        public Tasks Read(int id)
+        {
+            return _context.Tasks.Find(id);
         }
     }
 }

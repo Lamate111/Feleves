@@ -7,7 +7,16 @@ using System.Threading.Tasks;
 
 namespace CE136U_HSZF_2024251.Persistence.MsSql
 {
-    public class CharacterDataProvider : DataProvider<Character>
+    public interface ICharacterDataProvider
+    {
+        void Create(Character entity);
+        void Delete(int id);
+        Character Read(int id);
+        void Update(Character entity);
+
+
+    }
+    public class CharacterDataProvider :ICharacterDataProvider
     {
         private readonly TheWitchAppDataBaseContext _context;
 

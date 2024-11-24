@@ -7,7 +7,15 @@ using System.Threading.Tasks;
 
 namespace CE136U_HSZF_2024251.Persistence.MsSql
 {
-    public class AttributesDataProvider : DataProvider<Attributes>
+    public interface IAttributesDataProvider
+    {
+        void Create(Attributes entity);
+        void Delete(int id);
+        Attributes Read(int id);
+        void Update(Attributes entity);
+
+    }
+    public class AttributesDataProvider : IAttributesDataProvider
     {
         public AttributesDataProvider(TheWitchAppDataBaseContext context)
         {

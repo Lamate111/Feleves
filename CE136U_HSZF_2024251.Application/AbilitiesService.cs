@@ -3,7 +3,15 @@ using CE136U_HSZF_2024251.Persistence.MsSql;
 
 namespace CE136U_HSZF_2024251.Application
 {
-    public class AbilitiesService : DataProvider<Abilities>
+    public interface IAbilitiesService
+    {
+        void Create(Abilities entity);
+        void Delete(int id);
+        Abilities Read(int id);
+        void Update(Abilities entity);
+
+    }
+    public class AbilitiesService : IAbilitiesService
     {
         public AbilitiesService(AbilitiesDataProvider context)
         {

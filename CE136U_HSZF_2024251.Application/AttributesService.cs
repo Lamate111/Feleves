@@ -8,10 +8,23 @@ using System.Threading.Tasks;
 
 namespace CE136U_HSZF_2024251.Application
 {
-    public class AttributesService : DataProvider<Attributes>
+    public interface IAttributesService
+    {
+        void Create(Attributes entity);
+        void Delete(int id);
+        Attributes Read(int id);
+        void Update(Attributes entity);
+
+    }
+    public class AttributesService : IAttributesService
     {
         readonly AttributesDataProvider  provider;
-        
+
+        public AttributesService(AttributesDataProvider provider)
+        {
+            this.provider = provider;
+        }
+
         public void Create(Attributes entity)
         {
             provider.Create(entity);

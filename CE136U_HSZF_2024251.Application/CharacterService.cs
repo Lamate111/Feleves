@@ -8,9 +8,24 @@ using System.Threading.Tasks;
 
 namespace CE136U_HSZF_2024251.Application
 {
-    public class CharacterService : DataProvider<Character>
+    public interface ICharacterService
+    {
+        void Create(Character entity);
+        void Delete(int id);
+        Character Read(int id);
+        void Update(Character entity);
+
+
+    }
+    public class CharacterService : ICharacterService
     {
         readonly CharacterDataProvider provider;
+
+        public CharacterService(CharacterDataProvider provider)
+        {
+            this.provider = provider;
+        }
+
         public void Create(Character entity)
         {
             provider.Create(entity);
