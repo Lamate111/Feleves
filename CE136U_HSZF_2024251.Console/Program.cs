@@ -27,6 +27,7 @@ namespace CE136U_HSZF_2024251.Console
                     services.AddSingleton<IMonsterService, MonsterService>();
                     services.AddSingleton<IResourcesService,ResourcesServices>();
                     services.AddSingleton<ITasksService,TaskService>();
+                    services.AddSingleton<JsonDeserializer>();
                 })
                 .Build();
             host.Start();
@@ -37,6 +38,14 @@ namespace CE136U_HSZF_2024251.Console
            IMonsterService monsterService = host.Services.CreateScope().ServiceProvider.GetService<IMonsterService>();
            IResourcesService resourcesService = host.Services.CreateScope().ServiceProvider.GetService<IResourcesService>();
            ITasksService tasksService = host.Services.CreateScope().ServiceProvider.GetService<ITasksService>();
+
+
+            using(var scope = host.Services.CreateScope())
+            {
+                var jsonLoader = scope.ServiceProvider.GetService<JsonDeserializer>();
+
+                jsonLoader.reader("Data.json");
+            }
 
 
 
