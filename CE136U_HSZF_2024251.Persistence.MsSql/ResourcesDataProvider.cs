@@ -9,10 +9,10 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
 {
     public interface IResourcesDataProvider
     {
-        void Create(Resources entity);
+        void Create(Resource entity);
         void Delete(int id);
-        Resources Read (int id);
-        void Update(Resources entity);
+        Resource Read (int id);
+        void Update(Resource entity);
 
     }
     public class ResourcesDataProvider : IResourcesDataProvider
@@ -22,10 +22,10 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
             _context = context;
         }
 
-        TheWitchAppDataBaseContext _context {  get; set; }
+         readonly TheWitchAppDataBaseContext _context; 
 
 
-        public void Create(Resources entity)
+        public void Create(Resource entity)
         {
             _context.Resources.Add(entity);
             _context.SaveChanges();
@@ -40,12 +40,12 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
             
         }
 
-        public Resources Read(int id)
+        public Resource Read(int id)
         {
             return _context.Resources.Find(id);
         }
 
-        public void Update(Resources entity)
+        public void Update(Resource entity)
         {
             _context.Resources.Update(entity);
             _context.SaveChanges();

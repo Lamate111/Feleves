@@ -9,10 +9,10 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
 {
     public interface IMonsterDataProvider
     {
-        void Create(Monsters entity);
+        void Create(Monster entity);
         void Delete(int id);
-        Monsters Read(int id);
-        void Update(Monsters entity);
+        Monster Read(int id);
+        void Update(Monster entity);
 
 
     }
@@ -26,29 +26,29 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
         TheWitchAppDataBaseContext _context {  get; set; }
 
 
-        public void Create(Monsters entity)
+        public void Create(Monster entity)
         {
-            _context.Monsters.Add(entity);
+            _context.Monster.Add(entity);
             _context.SaveChanges();
            
         }
 
         public void Delete(int id)
         {
-            var ToBeKilled = _context.Monsters.Find(id);
-            _context.Remove(ToBeKilled);
+            var ToBeKilled = _context.Monster.Find(id);
+            _context.Monster.Remove(ToBeKilled);
             _context.SaveChanges();
             
         }
 
-        public Monsters Read(int id)
+        public Monster Read(int id)
         {
-            return _context.Monsters.Find(id);
+            return _context.Monster.Find(id);
         }
 
-        public void Update(Monsters entity)
+        public void Update(Monster entity)
         {
-            _context.Monsters.Update(entity);
+            _context.Monster.Update(entity);
             _context.SaveChanges();
         }
     }

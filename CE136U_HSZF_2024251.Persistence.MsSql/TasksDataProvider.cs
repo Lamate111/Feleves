@@ -22,10 +22,7 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
             _context = context;
         }
 
-        TheWitchAppDataBaseContext _context {  get; set; }
-
-        
-
+        readonly TheWitchAppDataBaseContext _context;
 
 
         public void Create(Tasks task)

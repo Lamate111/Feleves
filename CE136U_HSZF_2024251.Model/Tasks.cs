@@ -1,33 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using CE136U_HSZF_2024251.Model;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-namespace CE136U_HSZF_2024251.Model
+public class Tasks
 {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
 
+    public virtual Hero? Hero { get; set; }
 
-    public class Tasks
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id {  get; set; }
-        
-        public int char_id { get; set; }
-        [Required]
-        public string name { get; set; }
-        [Required]
-        public int duration { get; set; }
-        [Required]
-        public string[,] required_resources { get; set; }
-        [Required]
-        public string[,] affected_status { get; set; }
-        [Required]
-        public string[,] reward { get; set; }
+    public string Name { get; set; }
 
-    }
+    public int Duration { get; set; }
 
+    public int RequiredResourcesId { get; set; }
+    [ForeignKey(nameof(RequiredResourcesId))]
+    public virtual Resource RequiredResources { get; set; }
+
+    public int? RewardId { get; set; }
+    [ForeignKey(nameof(RewardId))]
+    public virtual Resource? Reward { get; set; }
+
+    public int AffectedStatusId { get; set; }
+    [ForeignKey(nameof(AffectedStatusId))]
+    public virtual AffectedStatues AffectedStatus { get; set; }
 }

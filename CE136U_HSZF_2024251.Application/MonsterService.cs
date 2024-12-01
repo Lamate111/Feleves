@@ -10,23 +10,23 @@ namespace CE136U_HSZF_2024251.Application
 {
     public interface IMonsterService
     {
-        void Create(Monsters entity);
+        void Create(Monster entity);
         void Delete(int id);
-        Monsters Read(int id);
-        void Update(Monsters entity);
+        Monster Read(int id);
+        void Update(Monster entity);
 
 
     }
     public class MonsterService : IMonsterService
     {
-        readonly MonsterDataProvider provider;
+        readonly IMonsterDataProvider provider;
 
-        public MonsterService(MonsterDataProvider provider)
+        public MonsterService(IMonsterDataProvider provider)
         {
             this.provider = provider;
         }
 
-        public void Create(Monsters entity)
+        public void Create(Monster entity)
         {
             provider.Create(entity);
         }
@@ -36,12 +36,12 @@ namespace CE136U_HSZF_2024251.Application
             provider.Delete(id);
         }
 
-        public Monsters Read(int id)
+        public Monster Read(int id)
         {
            return provider.Read(id);
         }
 
-        public void Update(Monsters entity)
+        public void Update(Monster entity)
         {
             provider.Update(entity);
         }

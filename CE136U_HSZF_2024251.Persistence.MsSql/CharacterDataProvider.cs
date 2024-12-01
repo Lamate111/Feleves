@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace CE136U_HSZF_2024251.Persistence.MsSql
 {
-    public interface ICharacterDataProvider
+    public interface IHeroesDataProvider
     {
-        void Create(Character entity);
+        void Create(Hero entity);
         void Delete(int id);
-        Character Read(int id);
-        void Update(Character entity);
+        Hero Read(int id);
+        void Update(Hero entity);
 
 
     }
-    public class CharacterDataProvider :ICharacterDataProvider
+    public class CharacterDataProvider :IHeroesDataProvider
     {
         private readonly TheWitchAppDataBaseContext _context;
 
@@ -25,9 +25,9 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
             _context = context;
         }
 
-        public void Create(Character entity)
+        public void Create(Hero entity)
         {
-            _context.Characters.Add(entity);
+            _context.Heroes.Add(entity);
             _context.SaveChanges();
            
             
@@ -35,20 +35,20 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
 
         public void Delete(int id)
         {
-            var ToBeDeleted = _context.Characters.Find(id);
-            _context.Remove(ToBeDeleted);
+            var ToBeDeleted = _context.Heroes.Find(id);
+            _context.Heroes.Remove(ToBeDeleted);
             _context.SaveChanges();
             
         }
 
-        public Character Read(int id)
+        public Hero Read(int id)
         {
-            return _context.Characters.Find(id);
+            return _context.Heroes.Find(id);
         }
 
-        public void Update(Character entity)
+        public void Update(Hero entity)
         {
-            _context.Characters.Update(entity);
+            _context.Heroes.Update(entity);
             _context.SaveChanges();
         }
     }

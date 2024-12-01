@@ -10,23 +10,23 @@ namespace CE136U_HSZF_2024251.Application
 {
     public interface ICharacterService
     {
-        void Create(Character entity);
+        void Create(Hero entity);
         void Delete(int id);
-        Character Read(int id);
-        void Update(Character entity);
+        Hero Read(int id);
+        void Update(Hero entity);
 
 
     }
     public class CharacterService : ICharacterService
     {
-        readonly CharacterDataProvider provider;
+        readonly IHeroesDataProvider provider;
 
-        public CharacterService(CharacterDataProvider provider)
+        public CharacterService(IHeroesDataProvider provider)
         {
             this.provider = provider;
         }
 
-        public void Create(Character entity)
+        public void Create(Hero entity)
         {
             provider.Create(entity);
         }
@@ -36,12 +36,12 @@ namespace CE136U_HSZF_2024251.Application
             provider?.Delete(id);
         }
 
-        public Character Read(int id)
+        public Hero Read(int id)
         {
            return provider.Read(id);
         }
 
-        public void Update(Character entity)
+        public void Update(Hero entity)
         {
             provider.Update(entity);
         }

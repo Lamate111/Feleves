@@ -18,9 +18,9 @@ namespace CE136U_HSZF_2024251.Application
     }
     public class AttributesService : IAttributesService
     {
-        readonly AttributesDataProvider  provider;
+        readonly IAttributesDataProvider  provider;
 
-        public AttributesService(AttributesDataProvider provider)
+        public AttributesService(IAttributesDataProvider provider)
         {
             this.provider = provider;
         }

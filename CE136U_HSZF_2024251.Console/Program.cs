@@ -14,14 +14,12 @@ namespace CE136U_HSZF_2024251.Console
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddDbContext<TheWitchAppDataBaseContext>();
-                    services.AddSingleton<IAbilitiesDataProvider, AbilitiesDataProvider>();
                     services.AddSingleton<IAttributesDataProvider, AttributesDataProvider>();
-                    services.AddSingleton<ICharacterDataProvider, CharacterDataProvider>();
+                    services.AddSingleton<IHeroesDataProvider, CharacterDataProvider>();
                     services.AddSingleton<IMonsterDataProvider, MonsterDataProvider>();
                     services.AddSingleton<IResourcesDataProvider, ResourcesDataProvider>();
                     services.AddSingleton<ITasksProvider, TasksDataProvider>();
 
-                    services.AddSingleton<IAbilitiesService, AbilitiesService>();
                     services.AddSingleton<IAttributesService, AttributesService>();
                     services.AddSingleton<ICharacterService, CharacterService>();
                     services.AddSingleton<IMonsterService, MonsterService>();
@@ -32,7 +30,6 @@ namespace CE136U_HSZF_2024251.Console
                 .Build();
             host.Start();
         
-           IAbilitiesService abilitiesService = host.Services.CreateScope().ServiceProvider.GetService<IAbilitiesService>();
            IAttributesService attributesService = host.Services.CreateScope().ServiceProvider.GetService<IAttributesService>();
            ICharacterService characterService = host.Services.CreateScope().ServiceProvider.GetService<ICharacterService>();
            IMonsterService monsterService = host.Services.CreateScope().ServiceProvider.GetService<IMonsterService>();
@@ -46,11 +43,6 @@ namespace CE136U_HSZF_2024251.Console
 
                 jsonLoader.reader("Data.json");
             }
-
-
-
-
-
         }
     }
 }

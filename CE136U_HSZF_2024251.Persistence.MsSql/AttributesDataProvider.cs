@@ -22,7 +22,7 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
             _context = context;
         }
 
-        TheWitchAppDataBaseContext _context {  get; set; }
+        readonly TheWitchAppDataBaseContext _context;
 
         public void Create(Attributes entity)
         {
@@ -34,7 +34,7 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
         public void Delete(int id)
         {
             var ToBeDeleted = _context.Attributes.Find(id);
-            _context.Remove(ToBeDeleted);
+            _context.Attributes.Remove(ToBeDeleted);
             _context.SaveChanges();
             
         }
@@ -46,7 +46,7 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
 
         public void Update(Attributes entity)
         {
-            _context.Update(entity);
+            _context.Attributes.Update(entity);
             _context.SaveChanges();
         }
     }

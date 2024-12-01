@@ -10,22 +10,22 @@ namespace CE136U_HSZF_2024251.Application
 {
     public interface IResourcesService
     {
-        void Create(Resources entity);
+        void Create(Resource entity);
         void Delete(int id);
-        Resources Read(int id);
-        void Update(Resources entity);
+        Resource Read(int id);
+        void Update(Resource entity);
 
     }
     public class ResourcesServices : IResourcesService
     {
-        readonly ResourcesDataProvider _context;
+        readonly IResourcesDataProvider _context;
 
-        public ResourcesServices(ResourcesDataProvider context)
+        public ResourcesServices(IResourcesDataProvider context)
         {
             _context = context;
         }
 
-        public void Create(Resources entity)
+        public void Create(Resource entity)
         {
             _context.Create(entity);
             
@@ -36,12 +36,12 @@ namespace CE136U_HSZF_2024251.Application
             _context.Delete(id);
         }
 
-        public Resources Read(int id)
+        public Resource Read(int id)
         {
             return _context.Read(id);
         }
 
-        public void Update(Resources entity)
+        public void Update(Resource entity)
         {
             _context.Update(entity);
         }
