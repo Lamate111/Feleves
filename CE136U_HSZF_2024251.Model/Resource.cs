@@ -9,6 +9,8 @@ namespace CE136U_HSZF_2024251.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        public int HeroID { get; set; }
+        [ForeignKey(nameof(Hero))]
         public virtual Hero? Hero { get; set; }
 
         public virtual Monster? Monster { get; set; }

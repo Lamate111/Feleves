@@ -9,6 +9,11 @@ namespace CE136U_HSZF_2024251.Model
             [Key]
             [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public int Id { get; set; }
+
+            [Required]
+            public int HeroId { get; set; }
+
+            [ForeignKey(nameof(HeroId))]
             public virtual Hero Hero { get; set; } = null;
 
             public int Health { get; set; } // Egészség érték
@@ -20,6 +25,7 @@ namespace CE136U_HSZF_2024251.Model
             public int Fatigue { get; set; } // Fáradtság érték
         }
     }
+
 
 
 
