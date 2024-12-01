@@ -41,6 +41,22 @@ namespace CE136U_HSZF_2024251.Application
                 _characterService.Create(character);
 
             }
+
+            List<Tasks> tasks = JsonSerializer.Deserialize<List<Tasks>>(root.GetProperty("tasks").GetRawText());
+            foreach (Tasks tasks_data in tasks)
+            {
+                _tasksService.Create(tasks_data);
+               
+            }
+
+            List<Monster> monsters = JsonSerializer.Deserialize<List<Monster>>(root.GetProperty("monsters").GetRawText());
+            foreach (Monster monster in monsters)
+            {
+                _monsterService.Create(monster);
+            }
+            
+
+
         }
     }
 }

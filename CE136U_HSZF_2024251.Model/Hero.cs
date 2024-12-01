@@ -6,12 +6,12 @@ namespace CE136U_HSZF_2024251.Model
     public class Hero
     {
         [Key]
-        public int Id { get; set; }
+        public int HeroId { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
 
-        public string HealthStatus { get; set; } // Egészségi állapot (pl. healthy, injured)
+        public string? HealthStatus { get; set; } // Egészségi állapot (pl. healthy, injured)
 
         [Required]
         public virtual Attributes Attributes { get; set; }

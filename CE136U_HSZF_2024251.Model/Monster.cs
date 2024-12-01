@@ -9,7 +9,7 @@ namespace CE136U_HSZF_2024251.Model
             
             [Key]
             [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-            public int Id { get; set; }
+            public int MonsterId { get; set; }
 
 
             public string Name { get; set; } // Szörny neve

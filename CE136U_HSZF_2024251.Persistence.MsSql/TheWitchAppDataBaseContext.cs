@@ -23,8 +23,6 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
            Database.EnsureCreated();
         }
 
-        public TheWitchAppDataBaseContext(DbContextOptions<TheWitchAppDataBaseContext> options) : base(options) { }
-
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -48,7 +46,7 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
             modelBuilder.Entity<Hero>()
                 .HasOne(h => h.Resources)
                 .WithOne(r => r.Hero)
-                .HasForeignKey<Resource>(r => r.Id)
+                .HasForeignKey<Resource>(r => r.ResourceId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Configure Tasks and AffectedStatues relationship
@@ -76,7 +74,7 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
             modelBuilder.Entity<Monster>()
                 .HasOne(m => m.Loot)
                 .WithOne(r => r.Monster)
-                .HasForeignKey<Monster>(m => m.Id)
+                .HasForeignKey<Monster>(m => m.MonsterId)
                 .OnDelete(DeleteBehavior.Cascade);
 
 
