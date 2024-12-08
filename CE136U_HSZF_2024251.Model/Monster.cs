@@ -20,7 +20,6 @@ namespace CE136U_HSZF_2024251.Model
 
             public string? RequiredAbility { get; set; } // Szükséges képesség (pl. "combat")
 
-            [Required]
-            public virtual Resource? Loot { get; set; } // Zsákmány (loot)
+            public virtual Resource? Resource { get; set; } // Zsákmány (loot)
         }
     }

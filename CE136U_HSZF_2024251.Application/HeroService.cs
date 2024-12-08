@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CE136U_HSZF_2024251.Application
 {
-    public interface ICharacterService
+    public interface IHeroService
     {
         void Create(Hero entity);
         void Delete(int id);
@@ -17,11 +17,11 @@ namespace CE136U_HSZF_2024251.Application
 
 
     }
-    public class CharacterService : ICharacterService
+    public class HeroService : IHeroService
     {
         readonly IHeroesDataProvider provider;
 
-        public CharacterService(IHeroesDataProvider provider)
+        public HeroService(IHeroesDataProvider provider)
         {
             this.provider = provider;
         }

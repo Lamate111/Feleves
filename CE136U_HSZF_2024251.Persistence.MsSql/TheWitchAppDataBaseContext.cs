@@ -16,6 +16,7 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
 
         public DbSet<Resource> Resources { get; set; }
         public DbSet<Tasks> Tasks { get; set; }
+        public DbSet<AffectedStatues> AffectedStatues { get; set; }
 
         public TheWitchAppDataBaseContext()
         {
@@ -38,44 +39,45 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
             // Configure Hero and Attributes relationship
             modelBuilder.Entity<Hero>()
                 .HasOne(h => h.Attributes)
-                .WithOne(a => a.Hero)
-                .HasForeignKey<Attributes>(a => a.Id)
-                .OnDelete(DeleteBehavior.Cascade);
+                .WithOne(k => k.Hero)
+                .HasForeignKey<Attributes>(a => a.HeroID_attr)
+                .OnDelete(DeleteBehavior.NoAction);
+                
 
             // Configure Hero and Resource relationship
             modelBuilder.Entity<Hero>()
                 .HasOne(h => h.Resources)
-                .WithOne(r => r.Hero)
-                .HasForeignKey<Resource>(r => r.ResourceId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .WithOne(k => k.Hero)
+                .HasForeignKey<Resource>(r => r.HeroID_res)
+                .OnDelete(DeleteBehavior.NoAction);
 
             // Configure Tasks and AffectedStatues relationship
             modelBuilder.Entity<Tasks>()
                 .HasOne(t => t.AffectedStatus)
-                .WithOne(a => a.Task)
-                .HasForeignKey<AffectedStatues>(a => a.TaskId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .WithOne(k => k.Task)
+                .HasForeignKey<AffectedStatues>(a => a.TaskID_affct)
+                .OnDelete(DeleteBehavior.NoAction);
 
             // Configure Tasks and RequiredResources relationship
             modelBuilder.Entity<Tasks>()
-                .HasOne(t => t.RequiredResources)
-                .WithOne(r => r.RequiredByTask)
-                .HasForeignKey<Tasks>(t => t.RequiredResourcesId)
-                .OnDelete(DeleteBehavior.Restrict);
+                           .HasOne(t => t.RequiredResources)
+                           .WithOne(r => r.RequiredByTask)
+                           .HasForeignKey<Resource>(r => r.RequiredId_res)
+                           .OnDelete(DeleteBehavior.NoAction);
 
-            // Configure Tasks and Reward relationship
+            // One-to-One: Tasks -> Resource (Reward)
             modelBuilder.Entity<Tasks>()
                 .HasOne(t => t.Reward)
                 .WithOne(r => r.RewardForTask)
-                .HasForeignKey<Tasks>(t => t.RewardId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey<Resource>(r => r.RewardForTaskId_res)
+                .OnDelete(DeleteBehavior.NoAction);
 
             // Configure Monster and Resource (Loot) relationship
             modelBuilder.Entity<Monster>()
                 .HasOne(m => m.Loot)
                 .WithOne(r => r.Monster)
                 .HasForeignKey<Monster>(m => m.MonsterId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
 
             base.OnModelCreating(modelBuilder);

@@ -6,57 +6,195 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using CE136U_HSZF_2024251.Model;
+using Newtonsoft.Json;
+using System.ComponentModel.Design;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CE136U_HSZF_2024251.Application
 {
-    public class JsonDeserializer
+    //public class JsonDeserializer
+    //{
+    //    private readonly IHeroService _heroService;
+    //    private readonly ITasksService _taskService;
+    //    private readonly IMonsterService _monsterService;
+
+    //    public JsonDeserializer(IHeroService heroService, ITasksService taskService, IMonsterService monsterService)
+    //    {
+    //        _heroService = heroService;
+    //        _taskService = taskService;
+    //        _monsterService = monsterService;
+    //    }
+
+    //    public void DeserializeJson(string filePath)
+    //    {
+    //        if (!File.Exists(filePath))
+    //        {
+    //            Console.WriteLine("File not found: " + filePath);
+    //            return;
+    //        }
+
+    //        string jsonContent = File.ReadAllText(filePath);
+
+    //        // Deserialize JSON into a dictionary
+    //        var jsonData = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonContent);
+
+    //        // Process "heroes"
+    //        if (jsonData.ContainsKey("heroes"))
+    //        {
+    //            var heroesJson = JsonConvert.DeserializeObject<List<Hero>>(jsonData["heroes"].ToString());
+    //            foreach (var hero in heroesJson)
+    //            {
+
+    //                    var newHero = new Hero
+    //                    {
+    //                        Name = hero.Name,
+    //                        HealthStatus = hero.HealthStatus,
+    //                        Attributes = new Attributes
+    //                        {
+    //                            Health = hero.Attributes.Health,
+    //                            Hunger = hero.Attributes.Hunger,
+    //                            Thirst = hero.Attributes.Thirst,
+    //                            Fatigue = hero.Attributes.Fatigue
+    //                        },
+    //                        Abilities = hero.Abilities,
+    //                        Resources = new Resource
+    //                        {
+    //                            Food = hero.Resources.Food,
+    //                            Water = hero.Resources.Water,
+    //                            Weapons = hero.Resources.Weapons,
+    //                            AlchemyIngredients = hero.Resources.AlchemyIngredients
+    //                        }
+    //                    };
+    //                _heroService.Create(newHero);
+    //                }
+
+    //            }
+
+    //        // Process "tasks"
+    //        if (jsonData.ContainsKey("tasks"))
+    //        {
+    //            var tasksJson = JsonConvert.DeserializeObject<List<Tasks>>(jsonData["tasks"].ToString());
+    //            foreach (var task in tasksJson)
+    //            {
+
+    //                    var newTask = new Tasks
+    //                    {
+    //                        Name = task.Name,
+    //                        Duration = task.Duration,
+    //                        RequiredResources = new Resource
+    //                        {
+    //                            Food = task.RequiredResources.Food,
+    //                            Water = task.RequiredResources.Water,
+    //                            Weapons = task.RequiredResources.Weapons,
+    //                            AlchemyIngredients = task.RequiredResources.AlchemyIngredients
+    //                        },
+    //                        AffectedStatus = new AffectedStatues
+    //                        {
+    //                            Health = task.AffectedStatus.Health,
+    //                            Hunger = task.AffectedStatus.Hunger,
+    //                            Thirst = task.AffectedStatus.Thirst,
+    //                            Fatigue = task.AffectedStatus.Fatigue
+    //                        },
+    //                        Reward = task.Reward != null
+    //                            ? new Resource
+    //                            {
+    //                                Food = task.Reward.Food,
+    //                                Water = task.Reward.Water,
+    //                                Weapons = task.Reward.Weapons,
+    //                                AlchemyIngredients = task.Reward.AlchemyIngredients
+    //                            }
+    //                            : null
+    //                    };
+    //                    _taskService.Create(newTask);
+    //                }
+    //            }
+
+
+    //        // Process "monsters"
+    //        if (jsonData.ContainsKey("monsters"))
+    //        {
+    //            var monstersJson = JsonConvert.DeserializeObject<List<Monster>>(jsonData["monsters"].ToString());
+    //            foreach (var monster in monstersJson)
+    //            {
+
+    //                    var newMonster = new Monster
+    //                    {
+    //                        Name = monster.Name,
+    //                        Difficulty = monster.Difficulty,
+    //                        RequiredAbility = monster.RequiredAbility,
+    //                        Loot = new Resource
+    //                        {
+    //                            Food = monster.Loot.Food,
+    //                            Water = monster.Loot.Water,
+    //                            Weapons = monster.Loot.Weapons,
+    //                            AlchemyIngredients = monster.Loot.AlchemyIngredients
+    //                        }
+    //                    };
+    //                    _monsterService.Create(newMonster);
+    //                }
+    //            }
+    //        }
+
+    //    }
+    namespace CE136U_HSZF_2024251.Application
     {
-
-        private readonly IAttributesService _attributesService;
-        private readonly ICharacterService _characterService;
-        private readonly IMonsterService _monsterService;
-        private readonly IResourcesService _resourcesService;
-        private readonly ITasksService _tasksService;
-        
-
-        public JsonDeserializer(IAttributesService attributesService, ICharacterService characterService, IMonsterService monsterService, IResourcesService resourcesService, ITasksService tasksService)
+        public class GameData
         {
-            _attributesService = attributesService;
-            _characterService = characterService;
-            _monsterService = monsterService;
-            _resourcesService = resourcesService;
-            _tasksService = tasksService;
+            public List<Hero> Heroes { get; set; }
+            public List<Tasks> Tasks { get; set; }
+            public List<Monster> Monsters { get; set; }
         }
-        public void reader(string route)
+
+        public class JsonDeserializer
         {
-            string json = File.ReadAllText(route);
-            using JsonDocument document = JsonDocument.Parse(json);
-            JsonElement root = document.RootElement;
+            private readonly IHeroService _heroService;
+            private readonly ITasksService _taskService;
+            private readonly IMonsterService _monsterService;
 
-            // Deserialize each part separately
-            Console.WriteLine(root.GetProperty("heroes").GetRawText());
-            List<Hero> heroes = JsonSerializer.Deserialize<List<Hero>>(root.GetProperty("heroes").GetRawText());
-            foreach (Hero character in heroes)
+            public JsonDeserializer(IHeroService heroService, ITasksService taskService, IMonsterService monsterService)
             {
-                _characterService.Create(character);
-
+                _heroService = heroService;
+                _taskService = taskService;
+                _monsterService = monsterService;
             }
 
-            List<Tasks> tasks = JsonSerializer.Deserialize<List<Tasks>>(root.GetProperty("tasks").GetRawText());
-            foreach (Tasks tasks_data in tasks)
+            public void DeserializeJson(string filePath)
             {
-                _tasksService.Create(tasks_data);
-               
+                if (!File.Exists(filePath))
+                {
+                    Console.WriteLine("File not found: " + filePath);
+                    return;
+                }
+
+                string jsonContent = File.ReadAllText(filePath);
+                var gameData = JsonConvert.DeserializeObject<GameData>(jsonContent);
+
+                if (gameData != null)
+                {
+                    foreach (var hero in gameData.Heroes)
+                    {
+                        _heroService.Create(hero); // Assuming Create method exists in IHeroService
+                    }
+
+                    foreach (var task in gameData.Tasks)
+                    {
+                        _taskService.Create(task); // Assuming Create method exists in ITasksService
+                    }
+
+                    foreach (var monster in gameData.Monsters)
+                    {
+                        _monsterService.Create(monster); // Assuming Create method exists in IMonsterService
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Deserialization failed.");
+                }
             }
-
-            List<Monster> monsters = JsonSerializer.Deserialize<List<Monster>>(root.GetProperty("monsters").GetRawText());
-            foreach (Monster monster in monsters)
-            {
-                _monsterService.Create(monster);
-            }
-            
-
-
         }
     }
 }
+
+
+
+

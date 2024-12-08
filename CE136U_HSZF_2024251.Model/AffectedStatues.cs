@@ -6,16 +6,14 @@ public class AffectedStatues
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
+    public int AffectedStatuesId { get; set; }
 
     [Required]
-    public int TaskId { get; set; }
-
-    [ForeignKey(nameof(TaskId))]
+    public int TaskID_affct { get; set; }
     public virtual Tasks Task { get; set; }
 
-    public int Health { get; set; }
-    public int Hunger { get; set; }
-    public int Thirst { get; set; }
-    public int Fatigue { get; set; }
+    public int? Health { get; set; }
+    public int? Hunger { get; set; }
+    public int? Thirst { get; set; }
+    public int? Fatigue { get; set; }
 }

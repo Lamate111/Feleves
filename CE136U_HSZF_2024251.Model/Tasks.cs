@@ -15,15 +15,9 @@ public class Tasks
 
     public int Duration { get; set; }
 
-    public int RequiredResourcesId { get; set; }
-    [ForeignKey(nameof(RequiredResourcesId))]
-    public virtual Resource RequiredResources { get; set; }
+    public virtual Resource? RequiredResources { get; set; }
 
-    public int? RewardId { get; set; }
-    [ForeignKey(nameof(RewardId))]
     public virtual Resource? Reward { get; set; }
 
-    public int AffectedStatusId { get; set; }
-    [ForeignKey(nameof(AffectedStatusId))]
-    public virtual AffectedStatues AffectedStatus { get; set; }
+    public virtual AffectedStatues? AffectedStatus { get; set; }
 }
