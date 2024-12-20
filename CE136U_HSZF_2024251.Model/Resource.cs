@@ -15,21 +15,23 @@ namespace CE136U_HSZF_2024251.Model
         public virtual Hero? Hero { get; set; }
 
         [ForeignKey("MonsterId")]
-        public int? MonsterID_res { get; set; }
+        public int? LootID { get; set; }
         public virtual Monster? Monster { get; set; }
 
         // Reverse navigation for Tasks.RequiredResources
-        public int? RequiredId_res { get; set; }
-        public virtual Tasks? RequiredByTask { get; set; }
+        [ForeignKey("TaskId")]
+        public int? RequiredResourcesId { get; set; }
+        public virtual Tasks? RequiredResourcesTask { get; set; }
 
         // Reverse navigation for Tasks.Reward
-        public int? RewardForTaskId_res {  get; set; }
-        public virtual Tasks? RewardForTask { get; set; }
+        [ForeignKey("TaskId")]
+        public int? RewardID { get; set; }
+        public virtual Tasks? RewardTask { get; set; }
 
         public int? Food { get; set; }
         public int? Water { get; set; }
         public int? Weapons { get; set; }
-        public int? AlchemyIngredients { get; set; }
+        public int? Alchemy_ingredients { get; set; }
     }
 }
 

@@ -7,19 +7,18 @@ namespace CE136U_HSZF_2024251.Model
         public class Monster
         {
             
-            [Key]
-            [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+            [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public int MonsterId { get; set; }
 
-
-            public string Name { get; set; } // Szörny neve
+            [Required]
+            public string? Name { get; set; } // Szörny neve
 
  
             public int Difficulty { get; set; } // Nehézségi szint
 
 
-            public string? RequiredAbility { get; set; } // Szükséges képesség (pl. "combat")
+            public string? Required_ability { get; set; } // Szükséges képesség (pl. "combat")
 
-            public virtual Resource? Resource { get; set; } // Zsákmány (loot)
+            public virtual Resource? Loot { get; set; } // Zsákmány (loot)
         }
     }

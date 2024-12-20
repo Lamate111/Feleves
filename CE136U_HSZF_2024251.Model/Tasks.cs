@@ -11,13 +11,15 @@ public class Tasks
 
     public virtual Hero? Hero { get; set; }
 
-    public string Name { get; set; }
+    [Required]
+    public string? Name { get; set; }
 
     public int Duration { get; set; }
 
-    public virtual Resource? RequiredResources { get; set; }
+    [Required]
+    public virtual Resource? Required_resources { get; set; }
 
     public virtual Resource? Reward { get; set; }
 
-    public virtual AffectedStatues? AffectedStatus { get; set; }
+    public virtual AffectedStatues? Affected_status { get; set; }
 }

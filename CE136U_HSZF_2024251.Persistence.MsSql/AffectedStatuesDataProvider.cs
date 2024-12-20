@@ -7,19 +7,18 @@ using System.Threading.Tasks;
 
 namespace CE136U_HSZF_2024251.Persistence.MsSql
 {
-    public interface IAffectedSatues
+    public interface IAffectedStatuesDataProvider
     {
         void Create(AffectedStatues entity);
         void Delete(int id);
         AffectedStatues Read(int id);
         void Update(AffectedStatues entity);
 
-
     }
 
-    public class AffectedSatuesDataProvider : IAffectedSatues
+    public class AffectedStatuesDataProvider : IAffectedStatuesDataProvider
     {
-        public AffectedSatuesDataProvider (TheWitchAppDataBaseContext theWitchAppDataBaseContext)
+        public AffectedStatuesDataProvider (TheWitchAppDataBaseContext theWitchAppDataBaseContext)
         {
             _context = theWitchAppDataBaseContext;
             

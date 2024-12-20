@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CE136U_HSZF_2024251.Application\CE136U_HSZF_2024251.Application.csproj" />
     <ProjectReference Include="..\CE136U_HSZF_2024251.Model\CE136U_HSZF_2024251.Model.csproj" />
     <ProjectReference Include="..\CE136U_HSZF_2024251.Persistence.MsSql\CE136U_HSZF_2024251.Persistence.MsSql.csproj" />

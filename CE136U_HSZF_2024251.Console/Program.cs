@@ -1,20 +1,14 @@
 ﻿
 using CE136U_HSZF_2024251.Application;
-using CE136U_HSZF_2024251.Application.CE136U_HSZF_2024251.Application; // Fasz se tudja miért működik de igen
 using CE136U_HSZF_2024251.Model;
 using CE136U_HSZF_2024251.Persistence.MsSql;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using System;
 
-namespace CE136U_HSZF_2024251.Console
-{
-    internal class Program
-    {
-        static void Main(string[] args)
-        {
-            var host = Host.CreateDefaultBuilder()
-                .ConfigureServices((hostContext, services) =>
+var host = Host.CreateDefaultBuilder()
+          .ConfigureServices((hostContext, services) =>
                 {
                     // Register DbContext and other services
                     services.AddDbContext<TheWitchAppDataBaseContext>();
@@ -23,33 +17,48 @@ namespace CE136U_HSZF_2024251.Console
                     services.AddSingleton<IMonsterDataProvider, MonsterDataProvider>();
                     services.AddSingleton<IResourcesDataProvider, ResourcesDataProvider>();
                     services.AddSingleton<ITasksProvider, TasksDataProvider>();
-                    services.AddSingleton<IAffectedSatues,AffectedSatuesDataProvider>();
+                    services.AddSingleton<IAffectedStatuesDataProvider, AffectedStatuesDataProvider>();
 
                     // Register Services
-                    services.AddScoped<IAffectedSatuesService,AffectedSatuesService>(); 
-                    services.AddScoped<IAttributesService, AttributesService>();
-                    services.AddScoped<IHeroService, HeroService>();
-                    services.AddScoped<IMonsterService, MonsterService>();
-                    services.AddScoped<IResourcesService, ResourcesServices>();
-                    services.AddScoped<ITasksService, TaskService>();
+                    
+                    services.AddSingleton<IAttributesService, AttributesService>();
+                    services.AddSingleton<IHeroService, HeroService>();
+                    services.AddSingleton<IMonsterService, MonsterService>();
+                    services.AddSingleton<IResourcesService, ResourcesServices>();
+                    services.AddSingleton<ITasksService, TaskService>();
+                    services.AddSingleton<IAffectedStatuesService, AffectedStatuesService>();
 
                     // Register JsonDeserializer
-                    services.AddScoped<JsonDeserializer>(); // Ensure it's scoped if it uses other scoped services
+                    services.AddSingleton<JsonDeserializer>(); // Ensure it's scoped if it uses other scoped services
                 })
                 .Build();
-
             host.Start();
 
-            using (var scope = host.Services.CreateScope())
-            {
-                var serviceProvider = scope.ServiceProvider;
+            IAffectedStatuesService AffectedStatuesService = host.Services.CreateScope().ServiceProvider.GetService<IAffectedStatuesService>();
+            IAttributesService AttributesService = host.Services.CreateScope().ServiceProvider.GetService<IAttributesService>();
+            IHeroService HeroService = host.Services.CreateScope().ServiceProvider.GetService<IHeroService>();
+            IMonsterService MonsterService = host.Services.CreateScope().ServiceProvider.GetService<IMonsterService>();
+            IResourcesService ResourcesService = host.Services.CreateScope().ServiceProvider.GetService<IResourcesService>();
+            ITasksService TasksService = host.Services.CreateScope().ServiceProvider.GetService<ITasksService>();
 
-                // Resolve the JsonDeserializer service
-                var jsonLoader = serviceProvider.GetRequiredService<JsonDeserializer>();
+using (var scope = host.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
 
-                // Call the DeserializeJson method with the path to your JSON file
-                jsonLoader.DeserializeJson("Data.json");
-            }
-        }
-    }
+    var affectedStatuesService = services.GetRequiredService<IAffectedStatuesService>();
+    var attributesService = services.GetRequiredService<IAttributesService>();
+    var heroService = services.GetRequiredService<IHeroService>();
+    var monsterService = services.GetRequiredService<IMonsterService>();
+    var resourcesService = services.GetRequiredService<IResourcesService>();
+    var tasksService = services.GetRequiredService<ITasksService>();
+
+
+    var jsonLoader = services.GetRequiredService<JsonDeserializer>();
+
+    string data = "data.json";
+    Console.Clear();
+    jsonLoader.DeserializeJson(data);
+                
+               
 }
+

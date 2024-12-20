@@ -4,16 +4,22 @@ using System.ComponentModel.DataAnnotations;
 
 public class AffectedStatues
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int AffectedStatuesId { get; set; }
 
-    [Required]
-    public int TaskID_affct { get; set; }
-    public virtual Tasks Task { get; set; }
+    [ForeignKey("TaskId")]
+    public int TaskID { get; set; }
+    public virtual Tasks? Task { get; set; }
 
     public int? Health { get; set; }
-    public int? Hunger { get; set; }
-    public int? Thirst { get; set; }
-    public int? Fatigue { get; set; }
+    public string? Hunger { get; set; }
+    public string? Thirst { get; set; }
+    public string? Fatigue { get; set; }
+
+    public override string ToString()
+    {
+        return ($"Id{AffectedStatuesId}, Health: {Health} \n" +
+            $"Hunger {Hunger},Thrist{Thirst}" +
+            $" Fatigue {Fatigue}");
+    }
 }

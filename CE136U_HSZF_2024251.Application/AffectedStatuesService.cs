@@ -1,4 +1,5 @@
 ﻿using CE136U_HSZF_2024251.Model;
+using CE136U_HSZF_2024251.Persistence.MsSql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CE136U_HSZF_2024251.Application
 {
-    public interface IAffectedSatuesService
+    public interface IAffectedStatuesService
     {
        
             void Create(AffectedStatues entity);
@@ -16,33 +17,34 @@ namespace CE136U_HSZF_2024251.Application
             void Update(AffectedStatues entity);
 
     }
-    public class AffectedSatuesService : IAffectedSatuesService
+    public class AffectedStatuesService : IAffectedStatuesService
     {
-        readonly IAffectedSatuesService provider;
+        private readonly IAffectedStatuesDataProvider _provider;
 
-        public AffectedSatuesService(IAffectedSatuesService provider)
+        public AffectedStatuesService(IAffectedStatuesDataProvider provider)
         {
-            this.provider = provider;
+            _provider = provider ?? throw new ArgumentNullException(nameof(provider));
         }
 
         public void Create(AffectedStatues entity)
         {
-            provider.Create(entity);
+            _provider.Create(entity);
         }
 
         public void Delete(int id)
         {
-           provider.Delete(id);
+            _provider.Delete(id);
         }
 
         public AffectedStatues Read(int id)
         {
-            return provider.Read(id);
+            return _provider.Read(id);
         }
 
         public void Update(AffectedStatues entity)
         {
-            provider.Update(entity);
+            _provider.Update(entity);
         }
     }
+
 }
