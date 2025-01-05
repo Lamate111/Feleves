@@ -14,6 +14,12 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
         Hero Read(int id);
         void Update(Hero entity);
 
+        IEnumerable<Hero> GetHeroes();
+
+        public bool IsAlreadyIn(string name);
+
+        
+
 
     }
     public class HeroDataProvider :IHeroesDataProvider
@@ -52,6 +58,16 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
             
         }
 
+        public IEnumerable<Hero> GetHeroes()
+        {
+            return  _context.Heroes;
+        }
+
+        public bool IsAlreadyIn(string name)
+        {
+            return _context.Heroes.Any(x => x.Name == name);
+        }
+
         public Hero Read(int id)
         {
             return _context.Heroes.Find(id);
@@ -62,5 +78,8 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
             _context.Heroes.Update(entity);
             _context.SaveChanges();
         }
+
+
+
     }
 }

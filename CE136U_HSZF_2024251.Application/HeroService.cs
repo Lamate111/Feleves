@@ -15,6 +15,10 @@ namespace CE136U_HSZF_2024251.Application
         Hero Read(int id);
         void Update(Hero entity);
 
+        public IEnumerable<Hero> GetHeroes();
+
+        public bool IsAlreadyIn(string name);
+
 
     }
     public class HeroService : IHeroService
@@ -36,6 +40,11 @@ namespace CE136U_HSZF_2024251.Application
             provider?.Delete(id);
         }
 
+        public IEnumerable<Hero> GetHeroes()
+        {
+            return provider.GetHeroes();
+        }
+
         public Hero Read(int id)
         {
            return provider.Read(id);
@@ -45,5 +54,12 @@ namespace CE136U_HSZF_2024251.Application
         {
             provider.Update(entity);
         }
+
+        public bool IsAlreadyIn(string name)
+        {
+            return provider.IsAlreadyIn(name);
+        }
+
+        
     }
 }

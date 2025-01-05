@@ -15,6 +15,7 @@ namespace CE136U_HSZF_2024251.Application
             void Delete(int id);
             AffectedStatues Read(int id);
             void Update(AffectedStatues entity);
+            public IEnumerable<AffectedStatues> GetAffectedStat();
 
     }
     public class AffectedStatuesService : IAffectedStatuesService
@@ -34,6 +35,11 @@ namespace CE136U_HSZF_2024251.Application
         public void Delete(int id)
         {
             _provider.Delete(id);
+        }
+
+        public IEnumerable<AffectedStatues> GetAffectedStat()
+        {
+            return _provider.GetAffStat();
         }
 
         public AffectedStatues Read(int id)

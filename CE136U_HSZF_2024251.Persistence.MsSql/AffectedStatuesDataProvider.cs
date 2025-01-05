@@ -14,6 +14,8 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
         AffectedStatues Read(int id);
         void Update(AffectedStatues entity);
 
+        IEnumerable<AffectedStatues> GetAffStat();
+
     }
 
     public class AffectedStatuesDataProvider : IAffectedStatuesDataProvider
@@ -49,6 +51,11 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
         {
             _context.AffectedStatues.Update(entity);
             _context.SaveChanges();
+        }
+
+        public IEnumerable<AffectedStatues> GetAffStat()
+        {
+            return _context.AffectedStatues;
         }
     }
 }

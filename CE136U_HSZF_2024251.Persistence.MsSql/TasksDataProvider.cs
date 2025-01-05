@@ -14,6 +14,8 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
         Tasks Read (int id);
         void Update (Tasks entity);
 
+        IEnumerable<Tasks> GetTasks();
+
     }
     public class TasksDataProvider : ITasksProvider
     {
@@ -50,6 +52,11 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
         public Tasks Read(int id)
         {
             return _context.Tasks.Find(id);
+        }
+
+        public IEnumerable<Tasks> GetTasks()
+        {
+            return _context.Tasks;
         }
     }
 }

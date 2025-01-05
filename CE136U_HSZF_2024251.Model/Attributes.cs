@@ -23,8 +23,11 @@ namespace CE136U_HSZF_2024251.Model
             [Required]
             public int Fatigue { get; set; } // Fáradtság érték
 
-
+        public override string? ToString()
+        {
+            return $"{Health}\n {Hunger} \n {Thirst} \n {Fatigue}";
         }
+    }
 }
 
 

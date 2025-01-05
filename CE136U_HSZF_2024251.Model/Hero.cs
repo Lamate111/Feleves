@@ -16,8 +16,8 @@ namespace CE136U_HSZF_2024251.Model
         [Required]
         public virtual Attributes? Attributes { get; set; }
 
-        public List<string> Abilities { get; set; } // Képességek listája
-
+        public List<string> Abilities { get; set; } // Képességek listájaws
+        
         [Required]
         public virtual Resource? Resources { get; set; }
 
@@ -27,6 +27,13 @@ namespace CE136U_HSZF_2024251.Model
         {
             Abilities = [];
             Tasks = [];
+        }
+
+        public override string? ToString()
+        {
+            return $"ID: {Name}--{Health_status} \n" +
+                    $"STATS: {Attributes.ToString()}" +
+                    $"ABILITIES:{string.Join(',',Abilities)}";
         }
     }
 

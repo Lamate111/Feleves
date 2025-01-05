@@ -14,6 +14,7 @@ namespace CE136U_HSZF_2024251.Application
         void Delete(int id);
         Resource Read(int id);
         void Update(Resource entity);
+        public IEnumerable<Resource> GetResources();
 
     }
     public class ResourcesServices : IResourcesService
@@ -34,6 +35,11 @@ namespace CE136U_HSZF_2024251.Application
         public void Delete(int id)
         {
             _context.Delete(id);
+        }
+
+        public IEnumerable<Resource> GetResources()
+        {
+            return _context.GetResources();
         }
 
         public Resource Read(int id)

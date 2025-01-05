@@ -14,6 +14,7 @@ namespace CE136U_HSZF_2024251.Application
         void Delete(int id);
         Tasks Read(int id);
         void Update(Tasks entity);
+        public IEnumerable<Tasks> GetTasks();
 
     }
     public class TaskService : ITasksService
@@ -33,6 +34,11 @@ namespace CE136U_HSZF_2024251.Application
         public void Delete(int id)
         {
             serviceProvider.Delete(id);
+        }
+
+        public IEnumerable<Tasks> GetTasks()
+        {
+            return serviceProvider.GetTasks();
         }
 
         public Tasks Read(int id)

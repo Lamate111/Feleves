@@ -15,6 +15,8 @@ namespace CE136U_HSZF_2024251.Application
         Monster Read(int id);
         void Update(Monster entity);
 
+        public IEnumerable<Monster> GetMonsters();
+
 
     }
     public class MonsterService : IMonsterService
@@ -34,6 +36,11 @@ namespace CE136U_HSZF_2024251.Application
         public void Delete(int id)
         {
             provider.Delete(id);
+        }
+
+        public IEnumerable<Monster> GetMonsters()
+        {
+            return provider.GetMonsters();
         }
 
         public Monster Read(int id)

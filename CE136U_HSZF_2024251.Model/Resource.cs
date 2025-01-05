@@ -32,6 +32,14 @@ namespace CE136U_HSZF_2024251.Model
         public int? Water { get; set; }
         public int? Weapons { get; set; }
         public int? Alchemy_ingredients { get; set; }
+
+        public override string ToString()
+        {
+            return $"Food :{Food}\n" +
+                   $"Water : {Water}" +
+                   $"Weapons : {Weapons}" +
+                   $"Alchemy_Ingredients {Alchemy_ingredients}";
+        }
     }
 }
 

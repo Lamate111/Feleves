@@ -13,6 +13,7 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
         void Delete(int id);
         Resource Read (int id);
         void Update(Resource entity);
+        IEnumerable<Resource> GetResources();
 
     }
     public class ResourcesDataProvider : IResourcesDataProvider
@@ -50,6 +51,11 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
             _context.Resources.Update(entity);
             _context.SaveChanges();
 
+        }
+
+        public IEnumerable<Resource> GetResources()
+        {
+           return _context.Resources;
         }
     }
 }

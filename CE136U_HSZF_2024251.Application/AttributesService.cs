@@ -15,6 +15,8 @@ namespace CE136U_HSZF_2024251.Application
         Attributes Read(int id);
         void Update(Attributes entity);
 
+        public IEnumerable<Attributes> GetAttributes();
+
     }
     public class AttributesService : IAttributesService
     {
@@ -33,6 +35,11 @@ namespace CE136U_HSZF_2024251.Application
         public void Delete(int id)
         {
             provider.Delete(id);
+        }
+
+        public IEnumerable<Attributes> GetAttributes()
+        {
+            return provider.GetAttributes();
         }
 
         public Attributes Read(int id)

@@ -19,7 +19,7 @@ public class AffectedStatues
     public override string ToString()
     {
         return ($"Id{AffectedStatuesId}, Health: {Health} \n" +
-            $"Hunger {Hunger},Thrist{Thirst}" +
+            $"Hunger {Hunger},Thrist{Thirst}\n" +
             $" Fatigue {Fatigue}");
     }
 }

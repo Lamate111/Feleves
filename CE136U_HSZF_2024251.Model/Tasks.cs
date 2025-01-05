@@ -22,4 +22,10 @@ public class Tasks
     public virtual Resource? Reward { get; set; }
 
     public virtual AffectedStatues? Affected_status { get; set; }
+
+    public override string ToString()
+    {
+        return $"{Name}--{Duration} Hours \t REQUIRED_RESOURCES: {Required_resources.ToString()}  \t REWARD:{Reward.ToString()} \t WILL AFFECT {Affected_status.ToString()} ";
+    }
+
 }

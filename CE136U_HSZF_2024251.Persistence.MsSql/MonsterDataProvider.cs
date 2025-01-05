@@ -14,6 +14,8 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
         Monster Read(int id);
         void Update(Monster entity);
 
+        IEnumerable<Monster> GetMonsters();
+
 
     }
     public class MonsterDataProvider : IMonsterDataProvider
@@ -39,6 +41,11 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
             _context.Monster.Remove(ToBeKilled);
             _context.SaveChanges();
             
+        }
+
+        public IEnumerable<Monster> GetMonsters()
+        {
+            return _context.Monster;
         }
 
         public Monster Read(int id)

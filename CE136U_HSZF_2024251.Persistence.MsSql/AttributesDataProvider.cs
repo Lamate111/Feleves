@@ -13,6 +13,7 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
         void Delete(int id);
         Attributes Read(int id);
         void Update(Attributes entity);
+        IEnumerable<Attributes> GetAttributes();
 
     }
     public class AttributesDataProvider : IAttributesDataProvider
@@ -48,6 +49,11 @@ namespace CE136U_HSZF_2024251.Persistence.MsSql
         {
             _context.Attributes.Update(entity);
             _context.SaveChanges();
+        }
+
+        public IEnumerable<Attributes> GetAttributes()
+        {
+            return _context.Attributes;
         }
     }
 }
