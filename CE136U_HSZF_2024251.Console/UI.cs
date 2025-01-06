@@ -78,28 +78,6 @@ namespace WitcherSurvival
                 }
             } while (true);
         }
-        private void CheckCharacterStatus(Hero hero, ref int badPoints)
-{
-    if (hero.Attributes.Thirst < 20)
-    {
-        Console.WriteLine($"{hero.Name} is severely dehydrated!");
-        badPoints++;
-    }
-    else if (hero.Attributes.Thirst < 70)
-    {
-        Console.WriteLine($"{hero.Name} is thirsty.");
-    }
-    else if (hero.Attributes.Thirst < 100)
-    {
-        Console.WriteLine($"{hero.Name} is slightly thirsty.");
-    }
-
-    if (hero.Attributes.Health <= 0)
-    {
-        Console.WriteLine($"{hero.Name} is in critical condition!");
-        badPoints++;
-    }
-}
 
         private void StartGame()
         {
@@ -119,6 +97,7 @@ namespace WitcherSurvival
             int[] CharacterTime = new int[team.Count];
             int[] Badpoints = new int[team.Count];
             bool[] Alive = new bool[team.Count];
+            bool IsPressed = false;
             
 
             for (int i = 0; i < team.Count; i++)
@@ -159,12 +138,57 @@ namespace WitcherSurvival
             // Main game loop
             do
             {
+                Console.Clear();
                 Console.WriteLine($"Day {CurrentDays + 1} out of {DaysToWin}");
+                Console.WriteLine($"Current Hour {GameTime}");
                 Console.WriteLine("Choose an action for your team:");
 
 
                 for (int i = 0; i < team.Count; i++)
-                { 
+                {
+                    if (team[i].Attributes.Health <= 0 || Badpoints[i] == 3)
+                    {
+                        Console.WriteLine($"{team[i].Name} has died or left due to bad health or accumulated penalties.");
+                        Alive[i] = false;
+                    }
+                    if (team[i].Attributes.Health <= 70 && team[i].Attributes.Health > 50)
+                    {
+                        team[i].Health_status = "Injured";
+                        Console.WriteLine($"{team[i].Name} is Injured");
+                    }
+                    if (team[i].Attributes.Health <= 50)
+                    {
+                        team[i].Health_status = "Sick";
+                        Console.WriteLine($"{team[i].Name} is Sick");
+                    }
+                    if (team[i].Attributes.Thirst < 100 && 70 < team[i].Attributes.Thirst)
+                    {
+                        Console.WriteLine($"{team[i].Name} is dehydrated");
+                        Badpoints[i]++;
+                    }
+                    if (team[i].Attributes.Thirst < 70 && team[i].Attributes.Thirst > 20)
+                    {
+                        Console.WriteLine($"{team[i].Name} is  thirsty ");
+                    }
+                    if (team[i].Attributes.Thirst < 20)
+                    {
+                        Console.WriteLine($"{team[i].Name} is little thirsty");
+                    }
+
+                    if (team[i].Attributes.Hunger < 100 && 70 < team[i].Attributes.Hunger)
+                    {
+                        Console.WriteLine($"{team[i].Name} is Malnourished");
+                        Badpoints[i]++;
+                    }
+                    if (team[i].Attributes.Hunger < 70 && team[i].Attributes.Hunger > 20)
+                    {
+                        Console.WriteLine($"{team[i].Name} is  hungry ");
+                    }
+                    if (team[i].Attributes.Hunger < 20)
+                    {
+                        Console.WriteLine($"{team[i].Name} is little hungry");
+                    }
+
                     if (!Alive[i])
                     {
                         Console.WriteLine($"{team[i].Name} has died and can no longer take actions.");
@@ -180,37 +204,6 @@ namespace WitcherSurvival
                         Console.Write("Choose an option: ");
                         string actionChoice = Console.ReadLine();
 
-                        //Check
-                        if (team[i].Attributes.Thirst < 100 && 70 < team[i].Attributes.Thirst)
-                        {
-                            Console.WriteLine($"{team[i].Name} is dehydrated");
-                            Badpoints[i]++;
-                        }
-                        if (team[i].Attributes.Thirst < 70 && team[i].Attributes.Thirst > 20)
-                        {
-                            Console.WriteLine($"{team[i].Name} is  thirsty ");
-                        }
-                        if (team[i].Attributes.Thirst < 20)
-                        {
-                            Console.WriteLine($"{team[i].Name} is little thirsty");
-                        }
-
-                        if (team[i].Attributes.Hunger < 100 && 70 < team[i].Attributes.Hunger)
-                        {
-                            Console.WriteLine($"{team[i].Name} is Malnourished");
-                            Badpoints[i]++;
-                        }
-                        if (team[i].Attributes.Hunger < 70 && team[i].Attributes.Hunger > 20)
-                        {
-                            Console.WriteLine($"{team[i].Name} is  hungry ");
-                        }
-                        if (team[i].Attributes.Hunger < 20)
-                        {
-                            Console.WriteLine($"{team[i].Name} is little hungry");
-                        }
-
-
-
                         switch (actionChoice)
                         {
                             case "1":
@@ -223,18 +216,27 @@ namespace WitcherSurvival
                                 if (task != null)
                                 {
                                     Console.WriteLine($"{team[i].Name} is performing task: {task.Name}");
-                                    CharacterTime[i] += task.Duration;
-                                    string fatigueStr = task.Affected_status.Fatigue.Replace("+", ""); // Remove the '+' character
-                                    int fatigueValue;
-                                    if (int.TryParse(fatigueStr, out fatigueValue))
-                                    {
-                                        team[i].Attributes.Fatigue += fatigueValue; // Successfully parsed, add the fatigue
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("Invalid fatigue value.");
-                                    }
 
+                                    //CONSEQUENCES
+                                    //CONSEQUENCES
+                                    CharacterTime[i] += task.Duration;
+
+                                    // Handle Fatigue (no null check needed, assuming task.Affected_status.Fatigue is never null)
+                                    string fatigueStr = task.Affected_status.Fatigue?.Replace("+", "") ?? "0"; // Default to "0" if Fatigue is null
+                                    team[i].Attributes.Fatigue += int.Parse(fatigueStr);
+
+                                    // Handle Hunger (check for null and default to "0" if null)
+                                    team[i].Attributes.Hunger += int.TryParse(task.Affected_status.Hunger, out int hungerValue) ? hungerValue : 0;
+
+                                    // Handle Thirst (check for null and default to "0" if null)
+                                    team[i].Attributes.Thirst += int.TryParse(task.Affected_status.Thirst, out int thirstValue) ? thirstValue : 0;
+
+                                    // Handle Health (null check with default value of 0 if null)
+                                    team[i].Attributes.Health += task.Affected_status.Health ?? 0;
+
+
+
+                                    //Resoucres elvétel, hozzáadása, Monster battle megcsinálás, tesztek, evenhandler?
 
                                 }
                                 else
@@ -271,25 +273,25 @@ namespace WitcherSurvival
                         }
 
                         // Check health and bad points
-                        if (team[i].Attributes.Health <= 0 || Badpoints[i] == 3)
-                        {
-                            Console.WriteLine($"{team[i].Name} has died or left due to bad health or accumulated penalties.");
-                            Alive[i] = false;
-                        }
+                        
                     }
                     else
                     {
                         Console.WriteLine($"{team[i].Name} is occupied until time {CharacterTime[i]}.");
                     }
                 }
-
+               
                 GameTime++;
-                if (GameTime % 24 == 0) 
+                GenerateDetailedDailyReport();
+                if (GameTime/24 == 1) 
                 {
                     GameTime = 0;
                     CurrentDays++;
+                    Console.WriteLine("Are you sure you want to continue?(y/n)");
+                    var answer = Console.ReadLine();
+                    if (answer != "no") IsPressed = true;
                 }
-            } while (CurrentDays < DaysToWin);
+            } while (CurrentDays < DaysToWin || !IsPressed);
 
             Console.WriteLine("Game over! Here's the final report:");
             GenerateDetailedDailyReport();
@@ -525,13 +527,7 @@ namespace WitcherSurvival
             }
 
         }
-
-
-
-
-
-
-            private void ListCharacters()
+    private void ListCharacters()
         {
             Console.Clear();
 
@@ -558,7 +554,7 @@ namespace WitcherSurvival
                         Console.WriteLine(character);
                     }
                 }
-            }
+       }
 
             
             Console.WriteLine("Press Enter to return to the menu.");
