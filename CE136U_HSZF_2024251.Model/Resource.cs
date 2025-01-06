@@ -35,11 +35,12 @@ namespace CE136U_HSZF_2024251.Model
 
         public override string ToString()
         {
-            return $"Food :{Food}\n" +
-                   $"Water : {Water}" +
-                   $"Weapons : {Weapons}" +
-                   $"Alchemy_Ingredients {Alchemy_ingredients}";
+            return $"\n Food : {(Food.HasValue ? Food.Value.ToString() : "None")}\n" +
+                   $" Water : {(Water.HasValue ? Water.Value.ToString() : "None")}\n" +
+                   $" Weapons : {(Weapons.HasValue ? Weapons.Value.ToString() : "None")}\n" +
+                   $" Alchemy_Ingredients : {(Alchemy_ingredients.HasValue ? Alchemy_ingredients.Value.ToString() : "None")} \n";
         }
+
     }
 }
 

@@ -25,7 +25,11 @@ namespace CE136U_HSZF_2024251.Model
 
         public override string? ToString()
         {
-            return $"{Health}\n {Hunger} \n {Thirst} \n {Fatigue}";
+            return $"" +
+                $"Health : {Health}\n " +
+                $"Hunger : {Hunger} \n " +
+                $"Thirst : {Thirst} \n " +
+                $"Fatigue : {Fatigue}";
         }
     }
 }

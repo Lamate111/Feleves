@@ -20,5 +20,13 @@ namespace CE136U_HSZF_2024251.Model
             public string? Required_ability { get; set; } // Szükséges képesség (pl. "combat")
 
             public virtual Resource? Loot { get; set; } // Zsákmány (loot)
+
+        public override string? ToString()
+        {
+            return $"{Name}" +
+                $"\n Difficulty: {Difficulty}" +
+                $"\n Weak to: {Required_ability}\n" +
+                $"LOOT: {Loot}";
         }
+    }
     }

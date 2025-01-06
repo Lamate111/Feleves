@@ -32,8 +32,8 @@ namespace CE136U_HSZF_2024251.Model
         public override string? ToString()
         {
             return $"ID: {Name}--{Health_status} \n" +
-                    $"STATS: {Attributes.ToString()}" +
-                    $"ABILITIES:{string.Join(',',Abilities)}";
+                    $"STATS: {Attributes.ToString()}\n" +
+                    $"ABILITIES:{string.Join(',',Abilities)}\n";
         }
     }
 

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using System;
+using WitcherSurvival;
 
 var host = Host.CreateDefaultBuilder()
           .ConfigureServices((hostContext, services) =>
@@ -30,6 +31,7 @@ var host = Host.CreateDefaultBuilder()
 
                     // Register JsonDeserializer
                     services.AddSingleton<JsonDeserializer>(); // Ensure it's scoped if it uses other scoped services
+                    services.AddSingleton<UI>();
                 })
                 .Build();
             host.Start();
@@ -52,12 +54,13 @@ using (var scope = host.Services.CreateScope())
     var resourcesService = services.GetRequiredService<IResourcesService>();
     var tasksService = services.GetRequiredService<ITasksService>();
 
-
+    var Ui = services.GetRequiredService<UI>();
     var jsonLoader = services.GetRequiredService<JsonDeserializer>();
 
     string data = "data.json";
     Console.Clear();
     jsonLoader.DeserializeJson(data);
+    Ui.ShowMainMenu();
                 
                
 }

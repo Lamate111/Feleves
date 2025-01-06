@@ -25,7 +25,11 @@ public class Tasks
 
     public override string ToString()
     {
-        return $"{Name}--{Duration} Hours \t REQUIRED_RESOURCES: {Required_resources.ToString()}  \t REWARD:{Reward.ToString()} \t WILL AFFECT {Affected_status.ToString()} ";
+        return $"{Name ?? "No Name"} \n" +
+               $" Duration : {Duration} Hours \n " +
+               $"REQUIRED_RESOURCES: {(Required_resources != null ? Required_resources.ToString() : "None")} \n" +
+               $"REWARD: {(Reward != null ? Reward.ToString() : "None")} \n";
     }
+
 
 }
