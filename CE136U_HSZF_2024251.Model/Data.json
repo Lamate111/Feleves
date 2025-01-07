@@ -1,150 +1,159 @@
 {
-	"characters": [
+	"heroes": [
 		{
 			"name": "Geralt",
-			"healthStatus": "healthy",
-			"hungerLevel": 20,
-			"thirstLevel": 15,
-			"fatigueLevel": 10,
-			"skills": {
-				"combat": 90,
-				"magic": 50,
-				"tracking": 80
+			"health_status": "healthy",
+			"attributes": {
+				"health": 100,
+				"hunger": 25,
+				"thirst": 15,
+				"fatigue": 10
+			},
+			"abilities": [ "combat", "alchemy" ],
+			"resources": {
+				"food": 5,
+				"water": 3,
+				"weapons": 2,
+				"alchemy_ingredients": 5
 			}
 		},
 		{
 			"name": "Yennefer",
-			"healthStatus": "healthy",
-			"hungerLevel": 15,
-			"thirstLevel": 10,
-			"fatigueLevel": 25,
-			"skills": {
-				"magic": 100,
-				"alchemy": 85,
-				"healing": 70
+			"health_status": "injured",
+			"attributes": {
+				"health": 65,
+				"hunger": 35,
+				"thirst": 25,
+				"fatigue": 15
+			},
+			"abilities": [ "magic", "healing" ],
+			"resources": {
+				"food": 5,
+				"water": 5,
+				"weapons": 1,
+				"alchemy_ingredients": 10
 			}
 		},
 		{
-			"name": "Eskel",
-			"healthStatus": "injured",
-			"hungerLevel": 30,
-			"thirstLevel": 20,
-			"fatigueLevel": 40,
-			"skills": {
-				"combat": 85,
-				"tracking": 75,
-				"weaponRepair": 60
+			"name": "Vesemir",
+			"health_status": "healthy",
+			"attributes": {
+				"health": 90,
+				"hunger": 30,
+				"thirst": 20,
+				"fatigue": 20
+			},
+			"abilities": [ "combat", "tracking" ],
+			"resources": {
+				"food": 4,
+				"water": 4,
+				"weapons": 3,
+				"alchemy_ingredients": 2
 			}
 		},
 		{
 			"name": "Ciri",
-			"healthStatus": "healthy",
-			"hungerLevel": 10,
-			"thirstLevel": 15,
-			"fatigueLevel": 20,
-			"skills": {
-				"combat": 95,
-				"magic": 90,
-				"speed": 100
+			"health_status": "healthy",
+			"attributes": {
+				"health": 80,
+				"hunger": 20,
+				"thirst": 15,
+				"fatigue": 10
+			},
+			"abilities": [ "combat", "magic", "tracking" ],
+			"resources": {
+				"food": 6,
+				"water": 4,
+				"weapons": 1,
+				"alchemy_ingredients": 7
 			}
 		}
 	],
 	"tasks": [
 		{
 			"name": "Monster Hunt",
-			"duration": 8,
-			"healthImpact": -30,
-			"resourceRequirement": {
-				"food": 5,
-				"weapons": 1
-			},
-			"resourceReward": {
-				"alchemyIngredients": 3,
-				"monsterTrophies": 1
-			}
-		},
-		{
-			"name": "Potion Brewing",
-			"duration": 6,
-			"healthImpact": 0,
-			"resourceRequirement": {
-				"alchemyIngredients": 2
-			},
-			"resourceReward": {
-				"potions": 2
-			}
-		},
-		{
-			"name": "Weapon Repair",
 			"duration": 4,
-			"healthImpact": 0,
-			"resourceRequirement": {
-				"tools": 1,
-				"metal": 2
+			"required_resources": {
+				"weapons": 1,
+				"food": 2,
+				"water": 2
 			},
-			"resourceReward": {
-				"weapons": 1
+			"affected_status": {
+				"health": -20,
+				"hunger": "+50",
+				"thirst": "+45",
+				"fatigue": "+10"
+			}
+		},
+		{
+			"name": "Alchemy Preparation",
+			"duration": 2,
+			"required_resources": {
+				"alchemy_ingredients": 3,
+				"food": 1,
+				"water": 1
+			},
+			"affected_status": {
+				"health": "+10",
+				"hunger": "+30",
+				"thirst": "+25",
+				"fatigue": "+5"
 			}
 		},
 		{
 			"name": "Resource Gathering",
-			"duration": 5,
-			"healthImpact": -10,
-			"resourceRequirement": {
-				"food": 1
+			"duration": 3,
+			"required_resources": {
+				"food": 1,
+				"water": 2
 			},
-			"resourceReward": {
-				"food": 10,
-				"water": 5
+			"affected_status": {
+				"health": -10,
+				"hunger": "+20",
+				"thirst": "+25",
+				"fatigue": "+15"
+			},
+			"reward": {
+				"food": 3,
+				"water": 3,
+				"alchemy_ingredients": 2
 			}
-		}
-	],
-	"resources": [
-		{
-			"name": "Food",
-			"quantity": 100
 		},
 		{
-			"name": "Water",
-			"quantity": 80
-		},
-		{
-			"name": "Alchemy Ingredients",
-			"quantity": 50
-		},
-		{
-			"name": "Weapons",
-			"quantity": 10
-		},
-		{
-			"name": "Metal",
-			"quantity": 30
-		},
-		{
-			"name": "Tools",
-			"quantity": 15
+			"name": "Weapon Repair",
+			"duration": 1,
+			"required_resources": {
+				"weapons": 1,
+				"alchemy_ingredients": 1
+			},
+			"affected_status": {
+				"fatigue": "+5"
+			},
+			"reward": {
+				"weapons": 1
+			}
 		}
 	],
 	"monsters": [
 		{
-			"name": "Ghoul",
-			"strength": 50,
-			"reward": { "alchemyIngredients": 2 }
-		},
-		{
-			"name": "Werewolf",
-			"strength": 80,
-			"reward": {
-				"monsterTrophies": 1,
-				"food": 5
+			"name": "Drowner",
+			"difficulty": 4,
+			"required_ability": "combat",
+			"loot": {
+				"weapons": 1,
+				"food": 3,
+				"water": 2
 			}
 		},
 		{
 			"name": "Griffin",
-			"strength": 120,
-			"reward": {
-				"alchemyIngredients": 5,
-				"monsterTrophies": 2
+			"difficulty": 7,
+			"required_ability": "combat",
+			"loot": {
+				"weapons": 2,
+				"food": 5,
+				"water": 4,
+				"alchemy_ingredients": 3
 			}
 		}
 	]

@@ -8,8 +8,15 @@
 
   <ItemGroup>
     <None Remove="characters.json" />
+    <None Remove="Data.json" />
     <None Remove="monsters.json" />
     <None Remove="tasks.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Data.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
