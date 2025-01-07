@@ -11,7 +11,6 @@ namespace WitcherSurvival
 
     public class UI
     {
-        
         private readonly IHeroService _heroService;
         private readonly ITasksService _taskService;
         private readonly IMonsterService _monsterService;
@@ -143,6 +142,27 @@ namespace WitcherSurvival
                 Console.WriteLine($"Current Hour {GameTime}");
                 Console.WriteLine("Choose an action for your team:");
 
+                // Display team stats and inventory at the beginning of each loop
+                Console.WriteLine("\n====== TEAM STATUS ======");
+                foreach (var member in team)
+                {
+                    if (member.Attributes.Health > 0)
+                    {
+                        Console.WriteLine($"{member.Name}: " +
+                            $"\n Health = {member.Attributes.Health}," +
+                            $"\n Hunger = {member.Attributes.Hunger}," +
+                            $"\n Thirst = {member.Attributes.Thirst}, " +
+                            $"\n Fatigue = {member.Attributes.Fatigue}, " +
+                            $"\n Status = {member.Health_status}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{member.Name}: Status = Dead or Unavailable");
+                    }
+                }
+
+                Console.WriteLine("\n====== INVENTORY ======");
+                Console.WriteLine(inventory.ToString());
 
                 for (int i = 0; i < team.Count; i++)
                 {
@@ -151,49 +171,65 @@ namespace WitcherSurvival
                         Console.WriteLine($"{team[i].Name} has died or left due to bad health or accumulated penalties.");
                         Alive[i] = false;
                     }
-                    if (team[i].Attributes.Health <= 70 && team[i].Attributes.Health > 50)
-                    {
-                        team[i].Health_status = "Injured";
-                        Console.WriteLine($"{team[i].Name} is Injured");
-                    }
-                    if (team[i].Attributes.Health <= 50)
-                    {
-                        team[i].Health_status = "Sick";
-                        Console.WriteLine($"{team[i].Name} is Sick");
-                    }
-                    if (team[i].Attributes.Thirst < 100 && 70 < team[i].Attributes.Thirst)
-                    {
-                        Console.WriteLine($"{team[i].Name} is dehydrated");
-                        Badpoints[i]++;
-                    }
-                    if (team[i].Attributes.Thirst < 70 && team[i].Attributes.Thirst > 20)
-                    {
-                        Console.WriteLine($"{team[i].Name} is  thirsty ");
-                    }
-                    if (team[i].Attributes.Thirst < 20)
-                    {
-                        Console.WriteLine($"{team[i].Name} is little thirsty");
-                    }
 
-                    if (team[i].Attributes.Hunger < 100 && 70 < team[i].Attributes.Hunger)
+                    if (Alive[i])
                     {
-                        Console.WriteLine($"{team[i].Name} is Malnourished");
-                        Badpoints[i]++;
-                    }
-                    if (team[i].Attributes.Hunger < 70 && team[i].Attributes.Hunger > 20)
-                    {
-                        Console.WriteLine($"{team[i].Name} is  hungry ");
-                    }
-                    if (team[i].Attributes.Hunger < 20)
-                    {
-                        Console.WriteLine($"{team[i].Name} is little hungry");
-                    }
+                        int health = team[i].Attributes.Health;
+                        int thirst = team[i].Attributes.Thirst;
+                        int hunger = team[i].Attributes.Hunger;
 
-                    if (!Alive[i])
+                        // Health status check using switch expression
+                        team[i].Health_status = health switch
+                        {
+                            <= 50 => "Sick",
+                            <= 70 => "Injured",
+                            _ => "Healthy"
+                        };
+
+                        Console.WriteLine($"\n{team[i].Name} is {team[i].Health_status}");
+
+                        // Thirst status check using switch expression
+                        switch (thirst)
+                        {
+                            case < 20:
+                                Console.WriteLine($"{team[i].Name} is little thirsty");
+                                break;
+                            case < 70:
+                                Console.WriteLine($"{team[i].Name} is thirsty");
+                                break;
+                            case > 70 and < 100:
+                                Console.WriteLine($"{team[i].Name} is dehydrated");
+                                Badpoints[i]++;
+                                break;
+                        }
+
+                        // Hunger status check using switch expression
+                        switch (hunger)
+                        {
+                            case < 20:
+                                Console.WriteLine($"{team[i].Name} is little hungry");
+                                break;
+                            case < 70:
+                                Console.WriteLine($"{team[i].Name} is hungry");
+                                break;
+                            case > 70 and < 100:
+                                Console.WriteLine($"{team[i].Name} is Malnourished");
+                                Badpoints[i]++;
+                                break;
+                        }
+
+                    }
+                    else
                     {
                         Console.WriteLine($"{team[i].Name} has died and can no longer take actions.");
                         continue;
                     }
+
+                    // Display current stats and inventory before every decision
+                    Console.WriteLine("\n====== CURRENT CHARACTER STATUS ======");
+                    Console.WriteLine($"{team[i].Name}: Health = {team[i].Attributes.Health}, Hunger = {team[i].Attributes.Hunger}, Thirst = {team[i].Attributes.Thirst}, Fatigue = {team[i].Attributes.Fatigue}, Status = {team[i].Health_status}");
+                    Console.WriteLine("\n====== CURRENT INVENTORY ======");
+                    Console.WriteLine(inventory.ToString());
 
                     if (CharacterTime[i] <= GameTime)
                     {
@@ -207,7 +243,7 @@ namespace WitcherSurvival
                         switch (actionChoice)
                         {
                             case "1":
-                                Console.WriteLine("=======Available tasks=======");
+                                Console.WriteLine("======= Available tasks =======");
                                 ListTasks();
                                 Console.Write("Choose a task by name: ");
                                 string taskName = Console.ReadLine();
@@ -217,27 +253,63 @@ namespace WitcherSurvival
                                 {
                                     Console.WriteLine($"{team[i].Name} is performing task: {task.Name}");
 
-                                    //CONSEQUENCES
-                                    //CONSEQUENCES
+                                    // Check if the required resources are available
+                                    bool hasEnoughResources = true;
+                                    Type resourceType = typeof(Resource);
+                                    foreach (var property in resourceType.GetProperties())
+                                    {
+                                        string requiredResourceValue = property.GetValue(task.Required_resources)?.ToString() ?? "0";
+                                        if (int.TryParse(requiredResourceValue, out int requiredAmount))
+                                        {
+                                            int currentInventoryValue = (int)property.GetValue(inventory);
+                                            if (currentInventoryValue < requiredAmount)
+                                            {
+                                                Console.WriteLine($"Not enough {property.Name} in inventory to perform the task!");
+                                                hasEnoughResources = false;
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    if (!hasEnoughResources)
+                                    {
+                                        Console.WriteLine("Task cannot be performed due to insufficient resources.");
+                                        break;
+                                    }
+
+                                    // Deduct the required resources from inventory
+                                    foreach (var property in resourceType.GetProperties())
+                                    {
+                                        string requiredResourceValue = property.GetValue(task.Required_resources)?.ToString() ?? "0";
+                                        if (int.TryParse(requiredResourceValue, out int requiredAmount))
+                                        {
+                                            int currentInventoryValue = (int)property.GetValue(inventory);
+                                            property.SetValue(inventory, currentInventoryValue - requiredAmount);
+                                        }
+                                    }
+
+                                    // Task consequences
                                     CharacterTime[i] += task.Duration;
 
-                                    // Handle Fatigue (no null check needed, assuming task.Affected_status.Fatigue is never null)
-                                    string fatigueStr = task.Affected_status.Fatigue?.Replace("+", "") ?? "0"; // Default to "0" if Fatigue is null
-                                    team[i].Attributes.Fatigue += int.Parse(fatigueStr);
-
-                                    // Handle Hunger (check for null and default to "0" if null)
+                                    // Adjust hero attributes
+                                    team[i].Attributes.Fatigue += int.Parse(task.Affected_status.Fatigue?.Replace("+", "") ?? "0");
                                     team[i].Attributes.Hunger += int.TryParse(task.Affected_status.Hunger, out int hungerValue) ? hungerValue : 0;
-
-                                    // Handle Thirst (check for null and default to "0" if null)
                                     team[i].Attributes.Thirst += int.TryParse(task.Affected_status.Thirst, out int thirstValue) ? thirstValue : 0;
-
-                                    // Handle Health (null check with default value of 0 if null)
                                     team[i].Attributes.Health += task.Affected_status.Health ?? 0;
 
+                                    // Add the task rewards to inventory
+                                    foreach (var property in resourceType.GetProperties())
+                                    {
+                                        string rewardResourceValue = property.GetValue(task.Reward)?.ToString() ?? "0";
+                                        if (int.TryParse(rewardResourceValue, out int rewardAmount))
+                                        {
+                                            int currentInventoryValue = (int)property.GetValue(inventory);
+                                            property.SetValue(inventory, currentInventoryValue + rewardAmount);
+                                        }
+                                    }
 
-
-                                    //Resoucres elvétel, hozzáadása, Monster battle megcsinálás, tesztek, evenhandler?
-
+                                    Console.WriteLine("Task completed! Rewards and penalties applied to inventory and attributes.");
+                                    Console.WriteLine($"Current inventory = {inventory.ToString()}");
                                 }
                                 else
                                 {
@@ -271,27 +343,26 @@ namespace WitcherSurvival
                                 Console.WriteLine("Invalid action. No action taken.");
                                 break;
                         }
-
-                        // Check health and bad points
-                        
                     }
                     else
                     {
                         Console.WriteLine($"{team[i].Name} is occupied until time {CharacterTime[i]}.");
                     }
                 }
-               
+
                 GameTime++;
                 GenerateDetailedDailyReport();
-                if (GameTime/24 == 1) 
+
+                if (GameTime / 24 == 1)
                 {
                     GameTime = 0;
                     CurrentDays++;
-                    Console.WriteLine("Are you sure you want to continue?(y/n)");
+                    Console.WriteLine("Are you sure you want to continue? (y/n)");
                     var answer = Console.ReadLine();
-                    if (answer != "no") IsPressed = true;
+                    if (answer != "y") IsPressed = true;
                 }
-            } while (CurrentDays < DaysToWin || !IsPressed);
+            } while (CurrentDays < DaysToWin && !IsPressed);
+
 
             Console.WriteLine("Game over! Here's the final report:");
             GenerateDetailedDailyReport();

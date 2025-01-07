@@ -16,9 +16,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{75F7CFC4-733B-48D1-A4CA-F4F27564BDB0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{84BC5981-43B4-48C1-8C12-5418068EBD6B}"
-	ProjectSection(SolutionItems) = preProject
-		CE136U_HSZF_2024251.Application\bin\Debug\net8.0\Data.json = CE136U_HSZF_2024251.Application\bin\Debug\net8.0\Data.json
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{4BC41C25-C234-41BB-A233-58218F221C37}"
 EndProject
